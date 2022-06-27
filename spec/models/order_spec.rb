@@ -2,8 +2,10 @@ require 'rails_helper'
 
 describe Order, type: :model do
   describe "valid object" do
+    let(:merchant) { create(:merchant) }
+    let(:shopper) { create(:shopper) }
     subject {
-      create(:order)
+      create(:order, merchant_id: merchant.id, shopper_id: shopper.id)
     }
 
     it "is valid with valid attributes" do
@@ -22,11 +24,13 @@ describe Order, type: :model do
   end
 
   describe "Scopes" do
-    let(:order) { create(:order) }
-    let(:completed_order) {  create(:order, completed_at: DateTime.now) }
+    let(:merchant) { create(:merchant) }
+    let(:shopper) { create(:shopper) }
+    let(:order) { create(:order, merchant_id: merchant.id, shopper_id: shopper.id) }
+    let(:completed_order) {  create(:order, merchant_id: merchant.id, shopper_id: shopper.id, completed_at: DateTime.now) }
 
     it "Include completed" do
-      expect(Order.all.completed).to eq completed_order
+      expect(Order.all.completed).to eq [completed_order]
     end
   end
 end

@@ -7,13 +7,13 @@ RSpec.describe MerchantsController, type: :request do
     let(:merchant) {create(:merchant)}
     let(:params) do
       {
-        merchant_id: merchant_id,
+        merchant_id: merchant.id,
         date: DateTime.now
       }
     end
 
     before do
-      get "/show", params: params
+      get "/merchants", params: params
     end
 
     it { expect(response).to have_http_status(:ok) }
